@@ -1,5 +1,5 @@
 {
-  "name": "express-multicell",
+  "name": "express-multicel",
   "version": "1.0.0",
   "description": "multicell project",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lopapus/express-multicell.git"
+    "url": "git+https://github.com/Lopapus/express-multicel.git"
   },
   "author": "Hector y Gabriel",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lopapus/express-multicell/issues"
+    "url": "https://github.com/Lopapus/express-multicel/issues"
   },
-  "homepage": "https://github.com/Lopapus/express-multicell#readme",
+  "homepage": "https://github.com/Lopapus/express-multicel#readme",
   "dependencies": {
     "express": "^4.17.2",
     "express-validator": "^6.14.0",

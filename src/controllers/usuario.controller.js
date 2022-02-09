@@ -1,4 +1,3 @@
-// const Sequelize     = require('sequelize');
 const usuario = require('../models').usuario;
 
 const controller = {};
