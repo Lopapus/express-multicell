@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   usuarios.init({
-    usuario: DataTypes.STRING(15),
-    nombre: DataTypes.STRING(50),
-    password: DataTypes.STRING(60),
-    clave_maestra: DataTypes.STRING(8),
-    rol: DataTypes.STRING(20),
+    usuario: DataTypes.STRING,
+    nombre: DataTypes.STRING,
+    password: DataTypes.STRING,
+    clave_maestra: DataTypes.STRING,
+    rol: DataTypes.STRING,
     estado: {
       type: DataTypes.BOOLEAN,
       defaultValue: true

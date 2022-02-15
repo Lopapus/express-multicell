@@ -1,12 +1,16 @@
 const route = require('express').Router();
 
+// middlewares
+const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middlewares');
+
+// controllers
 const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario, findUsuarios } = require('../controllers/usuarios.controller');
 
-route.get('/', findUsuarios);
-route.get('/:id', getUsuario);
-route.post('/', createUsuario);
-route.put('/', updateUsuario);
-route.put('/password', updatePassword);
-route.delete('/', deleteUsuario);
+route.get('/', [validateLogin, validateAdmin], findUsuarios);
+route.get('/:id', [validateLogin], getUsuario);
+route.post('/', [validateLogin, validateAdmin], createUsuario);
+route.put('/', [validateLogin, updateUsuario]);
+route.put('/password', [validateLogin], updatePassword);
+route.delete('/', [validateLogin, validateAdmin], deleteUsuario);
 
 module.exports = route;

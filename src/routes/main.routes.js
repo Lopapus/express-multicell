@@ -1,11 +1,7 @@
 const route = require('express').Router();
-const bcryptjs = require('bcryptjs');
 
 route.get('/', (req, res) => {
-  // res.json(req.session);
-  const salt = bcryptjs.genSaltSync(10);
-  const hash = bcryptjs.hashSync('Probando', salt);
-  res.json({ codigo: hash, largo: hash.length });
+  res.json(req.session);
 });
 
 route.get('/create/:session', (req, res) => {
