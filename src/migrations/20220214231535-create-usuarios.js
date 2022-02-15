@@ -6,16 +6,31 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(2)
       },
-      username: {
-        type: Sequelize.STRING
+      usuario: {
+        allowNull: false,
+        type: Sequelize.STRING(15)
       },
-      name: {
-        type: Sequelize.STRING
+      nombre: {
+        allowNull: false,
+        type: Sequelize.STRING(50)
       },
-      status: {
-        type: Sequelize.CHAR
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING(60)
+      },
+      clave_maestra: {
+        allowNull: false,
+        type: Sequelize.STRING(8)
+      },
+      rol: {
+        allowNull: false,
+        type: Sequelize.STRING(20)
+      },
+      estado: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

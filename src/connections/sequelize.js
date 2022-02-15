@@ -13,6 +13,9 @@ const status = async () => {
     await sequelize.authenticate();
     return 'Database connected!!';
   } catch (error) {
+    if (error instanceof Sequelize.ConnectionRefusedError) {
+      return 'Not connection BD';
+    }
     return error;
   }
 };

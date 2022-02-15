@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const session = require('express-session');
 const { status: dbstatus } = require('./src/connections/sequelize');
 require('dotenv').config();
 
@@ -9,12 +10,18 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Settings
 app.set('port', process.env.PORT || 4000);
 
 // Routes
-app.use('/usuario', require('./src/routes/usuario.routes'));
+app.use('/usuarios', require('./src/routes/usuarios.routes'));
+app.use('/', require('./src/routes/main.routes'));
 
 // Run server
 app.listen(app.get('port'), async () => {
