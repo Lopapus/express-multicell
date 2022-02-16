@@ -17,7 +17,8 @@ controller.login = async (req, res) => {
 
       if (validation) {
         req.session.userid = user.id;
-        return res.status(200).json({ msg: 'Usuario logeado' });
+        const { nombre, usuario: username, rol } = user;
+        return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol } });
       }
 
       return res.status(400).json({ msg: 'Contraseña incorrecta' });
