@@ -1,6 +1,7 @@
 const Usuarios = require('../models').usuarios;
 const bcryptjs = require('bcryptjs');
 const catchHandler = require('../helpers/catchHandler');
+const createJwt = require('../helpers/createToken');
 const controller = {};
 
 controller.login = async (req, res) => {
@@ -17,7 +18,8 @@ controller.login = async (req, res) => {
 
       if (validation) {
         const { nombre, usuario: username, rol, id } = user;
-        return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol, token: id } });
+        const token = await createJwt(id);
+        return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
       }
 
       return res.status(400).json({ msg: 'Contraseña incorrecta' });
