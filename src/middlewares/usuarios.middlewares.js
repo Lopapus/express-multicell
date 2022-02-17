@@ -4,8 +4,8 @@ const middleware = {};
 
 middleware.validateLogin = async (req, res, next) => {
   try {
-    const { userid } = req.session;
-    const usuario = await Usuarios.findByPk(userid);
+    const token = req.header('auth-token');
+    const usuario = await Usuarios.findByPk(token);
     if (usuario) {
       req.userrol = usuario.rol;
       return next();
@@ -13,7 +13,7 @@ middleware.validateLogin = async (req, res, next) => {
     return res.status(401).json({ msg: 'Debe loguearse para acceder' });
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json({ msg: alert.msg });
   }
 };
 
