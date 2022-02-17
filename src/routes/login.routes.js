@@ -1,9 +1,8 @@
 const route = require('express').Router();
 
-const { login, logout } = require('../controllers/login.controller');
-const { validateLogin } = require('../middlewares/usuarios.middlewares');
+const { login } = require('../controllers/login.controller');
 
 route.post('/login', login);
-route.get('/logout', [validateLogin], logout);
+// route.get('/logout', [validateLogin], logout);
 
 module.exports = route;

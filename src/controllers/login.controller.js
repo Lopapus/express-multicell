@@ -31,13 +31,13 @@ controller.login = async (req, res) => {
   }
 };
 
-controller.logout = async (req, res) => {
-  try {
-    res.status(200).json({ msg: 'Usuario deslogueado' });
-  } catch (error) {
-    const alert = catchHandler(error);
-    res.status(alert.status).json({ msg: alert.msg });
-  }
-};
+// controller.logout = async (req, res) => {
+//   try {
+//     res.status(200).json({ msg: 'Usuario deslogueado' });
+//   } catch (error) {
+//     const alert = catchHandler(error);
+//     res.status(alert.status).json({ msg: alert.msg });
+//   }
+// };
 
 module.exports = controller;
