@@ -6,9 +6,11 @@ const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middle
 // controllers
 const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario, findUsuarios } = require('../controllers/usuarios.controller');
 
-route.get('/', [validateLogin, validateAdmin], findUsuarios);
+// route.get('/', [validateLogin, validateAdmin], findUsuarios);
+route.get('/', findUsuarios);
 route.get('/:id', [validateLogin], getUsuario);
-route.post('/', [validateLogin, validateAdmin], createUsuario);
+// route.post('/', [validateLogin, validateAdmin], createUsuario);
+route.post('/', createUsuario);
 route.put('/', [validateLogin, updateUsuario]);
 route.put('/password', [validateLogin], updatePassword);
 route.delete('/', [validateLogin, validateAdmin], deleteUsuario);
