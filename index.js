@@ -1,22 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const session = require('express-session');
 const { status: dbstatus } = require('./src/connections/sequelize');
 require('dotenv').config();
-
 const app = express();
 
 // Middlewares
 app.use(morgan('dev'));
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true
+// }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
 
 // Settings
 app.set('port', process.env.PORT || 4000);
