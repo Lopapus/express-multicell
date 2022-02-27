@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const { status: dbstatus } = require('./src/connections/sequelize');
+const sequelize_db = require('./src/connections/sequelize');
 require('dotenv').config();
 const app = express();
 
@@ -11,6 +11,8 @@ app.use(morgan('dev'));
 //   origin: 'http://localhost:3000',
 //   credentials: true
 // }));
+// ==> middleware que verifica si hay coneccion a la base de datos
+app.use(sequelize_db.verify());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,5 +29,5 @@ app.use('/', require('./src/routes/main.routes'));
 app.listen(app.get('port'), async () => {
   console.log('app running successfully!!');
   console.log(`http://localhost:${app.get('port')}`);
-  console.log(await dbstatus());
+  console.log((await sequelize_db.status()).message);
 });
