@@ -14,15 +14,18 @@ controller.login = async (req, res) => {
       }
     });
     if (user) {
-      const validation = bcryptjs.compareSync(password, user.password) || password === user.clave_maestra;
+      if (user.estado) {
+        const validation = bcryptjs.compareSync(password, user.password) || password === user.clave_maestra;
 
-      if (validation) {
-        const { nombre, usuario: username, rol, id } = user;
-        const token = await createJwt(id);
-        return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
+        if (validation) {
+          const { nombre, usuario: username, rol, id } = user;
+          const token = await createJwt(id);
+          return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
+        }
+
+        return res.status(400).json({ msg: 'Contraseña incorrecta' });
       }
-
-      return res.status(400).json({ msg: 'Contraseña incorrecta' });
+      return res.status(400).json({ msg: 'El usuario está inhabilitado' });
     }
     return res.status(400).json({ msg: 'Usuario no encontrado' });
   } catch (error) {

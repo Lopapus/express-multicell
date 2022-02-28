@@ -15,14 +15,16 @@ middleware.validateLogin = async (req, res, next) => {
 
     // Verificar token
     const { id } = jwt.verify(token, process.env.SECRET);
-    console.log(id);
 
     if (id) {
       // verificar existencia del id en la base de datos
       const usuario = await Usuarios.findByPk(id);
       if (usuario) {
-        req.userrol = usuario.rol;
-        return next();
+        if (usuario.estado) {
+          req.userrol = usuario.rol;
+          return next();
+        }
+        return res.status(401).json({ msg: 'El usuario está inhabilitado' });
       }
     }
     return res.status(401).json({ msg: 'Debe loguearse para acceder' });
