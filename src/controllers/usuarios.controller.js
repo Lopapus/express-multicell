@@ -4,6 +4,7 @@ const catchHandler = require('../helpers/catchHandler');
 const existsUsuario = require('../helpers/existsUsuario');
 const { Op } = require('sequelize');
 const filterObjectAttributes = require('../helpers/filterObjectAttributes');
+const makeRandomString = require('../helpers/makeRandomString');
 
 const controller = {};
 
@@ -56,6 +57,26 @@ controller.getUsuario = async (req, res) => {
   }
 };
 
+// GET /NOMBRE USUARIO
+controller.findNomUsuario = async (req, res) => {
+  try {
+    const usuario = await Usuarios.findAll({
+      where: {
+        usuario: req.params.user
+      }
+    });
+
+    if (usuario) {
+      return res.status(200).json(usuario);
+    } else {
+      return res.status(400).json({ msg: 'El usuario no existe' });
+    }
+  } catch (error) {
+    const alert = catchHandler(error);
+    res.status(alert.status).json(alert.msg);
+  }
+};
+
 // CREATE/INSERT
 controller.createUsuario = async (req, res) => {
   try {
@@ -69,7 +90,7 @@ controller.createUsuario = async (req, res) => {
         nombre: req.body.nombre,
         usuario: req.body.usuario,
         password: hash_password,
-        clave_maestra: req.body.clave_maestra,
+        clave_maestra: makeRandomString(8),
         rol: req.body.rol
       });
 
@@ -113,6 +134,26 @@ controller.updateUsuario = async (req, res) => {
   }
 };
 
+// clave maestra
+controller.updateClaveMaestra = async (req, res) => {
+  try {
+    const usuario = await Usuarios.findByPk(req.body.id);
+    if (usuario) {
+      await usuario.update({
+        clave_maestra: makeRandomString(8),
+        where: {
+          id: req.body.id
+        }
+      });
+      return res.status(200).send(usuario.toJSON());
+    }
+    return res.status(400).json({ msg: 'El usuario no existe' });
+  } catch (error) {
+    const alert = catchHandler(error);
+    res.status(alert.status).json(alert.msg);
+  }
+};
+
 // UPDATE PASSWORD
 controller.updatePassword = async (req, res) => {
   try {
@@ -127,7 +168,7 @@ controller.updatePassword = async (req, res) => {
         const salt = bcryptjs.genSaltSync(10);
         const hash_password = bcryptjs.hashSync(password, salt);
         usuario.update({ password: hash_password });
-        return res.status(200).json(usuario.toJSON());
+        return res.status(200).send(usuario.toJSON());
       } else {
         return res.status(400).json({ msg: 'La contraseña o clave_maestra es incorrecta' });
       }
