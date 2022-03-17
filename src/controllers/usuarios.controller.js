@@ -145,7 +145,7 @@ controller.updateClaveMaestra = async (req, res) => {
           id: req.body.id
         }
       });
-      return res.status(200).send(usuario.toJSON());
+      return res.status(200).send(usuario.clave_maestra);
     }
     return res.status(400).json({ msg: 'El usuario no existe' });
   } catch (error) {
