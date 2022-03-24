@@ -94,7 +94,7 @@ controller.createUsuario = async (req, res) => {
         rol: req.body.rol
       });
 
-      return res.status(200).send(usuario.toJSON());
+      return res.status(200).json(usuario.toJSON());
     } else {
       return res.status(400).json({ msg: 'El usuario ya existe' });
     }
@@ -145,7 +145,7 @@ controller.updateClaveMaestra = async (req, res) => {
           id: req.body.id
         }
       });
-      return res.status(200).send(usuario.clave_maestra);
+      return res.status(200).json({ clave_maestra: usuario.clave_maestra });
     }
     return res.status(400).json({ msg: 'El usuario no existe' });
   } catch (error) {
@@ -168,7 +168,7 @@ controller.updatePassword = async (req, res) => {
         const salt = bcryptjs.genSaltSync(10);
         const hash_password = bcryptjs.hashSync(password, salt);
         usuario.update({ password: hash_password });
-        return res.status(200).send(usuario.toJSON());
+        return res.status(200).json(usuario.toJSON());
       } else {
         return res.status(400).json({ msg: 'La contraseña o clave_maestra es incorrecta' });
       }
