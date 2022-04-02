@@ -1,7 +1,7 @@
 const route = require('express').Router();
 
 // middlewares
-const { validateLogin, validateAdmin, validateAddUser } = require('../middlewares/usuarios.middlewares');
+const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middlewares');
 
 // controllers
 const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario, findUsuarios, findNomUsuario, updateClaveMaestra } = require('../controllers/usuarios.controller');
@@ -11,7 +11,7 @@ const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario,
 route.get('/', [validateLogin, validateAdmin], findUsuarios);
 route.get('/:id', [validateLogin, validateAdmin], getUsuario);
 route.get('/user/:user', [validateLogin, validateAdmin], findNomUsuario);
-route.post('/', [validateLogin, validateAdmin, validateAddUser], createUsuario);
+route.post('/', [validateLogin, validateAdmin], createUsuario);
 route.patch('/:id', [validateLogin], updateUsuario);
 route.put('/password', [validateLogin], updatePassword);
 route.delete('/', [validateLogin, validateAdmin], deleteUsuario);

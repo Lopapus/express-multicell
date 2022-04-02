@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Usuarios = require('../models').usuarios;
 const catchHandler = require('../helpers/catchHandler');
-const { check } = require('express-validator');
-const { validateResult } = '../helpers/validateHelper.js';
 const middleware = {};
 
 middleware.validateLogin = async (req, res, next) => {
@@ -57,22 +55,5 @@ middleware.validateAdmin = (req, res, next) => {
   }
   return res.status(401).json({ msg: 'Debes tener acceso de administrador para realizar esta acción' });
 };
-
-middleware.validateAddUser = [
-  check('nombre')
-    .trim()
-    .escape()
-    .isAlpha()
-    .isLength({ min: 6 })
-    .withMessage('nombre invalido'),
-  check('usuario')
-    .trim()
-    .escape()
-    .isLength({ min: 8 })
-    .withMessage('usuario invalido'),
-  (req, res, next) => {
-    validateResult(req, res, next);
-  }
-];
 
 module.exports = middleware;
