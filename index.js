@@ -23,7 +23,7 @@ app.set('port', process.env.PORT || 4000);
 // Routes
 app.use('/usuarios', require('./src/routes/usuarios.routes'));
 app.use('/', require('./src/routes/login.routes'));
-app.use('/', require('./src/routes/main.routes'));
+// app.use('/', require('./src/routes/main.routes'));
 
 // Run server
 app.listen(app.get('port'), async () => {

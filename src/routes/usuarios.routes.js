@@ -6,15 +6,14 @@ const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middle
 // controllers
 const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario, findUsuarios, findNomUsuario, updateClaveMaestra } = require('../controllers/usuarios.controller');
 
-// route.get('/', [validateLogin, validateAdmin], findUsuarios);
-// route.put('/', [validateLogin, updateUsuario]);
-route.get('/', findUsuarios);
+route.get('/', [validateLogin, validateAdmin], findUsuarios);
 route.get('/:id', [validateLogin], getUsuario);
-route.get('/user/:user', findNomUsuario);
+route.get('/user/:user', [validateLogin], findNomUsuario);
+// route.post('/', createUsuario);
 route.post('/', [validateLogin, validateAdmin], createUsuario);
-route.patch('/:id', updateUsuario);
+route.patch('/:id', [validateLogin], updateUsuario);
 route.put('/password', [validateLogin], updatePassword);
 route.delete('/', [validateLogin, validateAdmin], deleteUsuario);
-route.put('/master', updateClaveMaestra);
+route.put('/master', [validateLogin], updateClaveMaestra);
 
 module.exports = route;
