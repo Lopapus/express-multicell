@@ -2,6 +2,7 @@ const route = require('express').Router();
 
 const { login } = require('../controllers/login.controller');
 
+route.get('/', (req, res) => res.status(200).json({ msg: 'app corriendo' }));
 route.post('/login', login);
 // route.get('/logout', [validateLogin], logout);
 
