@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const sequelize_db = require('./src/connections/sequelize');
+const sequelize_db = require('./connections/sequelize');
 require('dotenv').config();
 const app = express();
 
@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.set('port', process.env.PORT || 4000);
 
 // Routes
-app.use('/usuarios', require('./src/routes/usuarios.routes'));
-app.use('/', require('./src/routes/login.routes'));
+app.use('/usuarios', require('./routes/usuarios.routes'));
+app.use('/', require('./routes/login.routes'));
 // app.use('/', require('./src/routes/main.routes'));
 
 // Run server
