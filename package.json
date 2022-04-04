@@ -38,27 +38,5 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "es2021": true,
-      "node": true
-    },
-    "extends": [
-      "standard"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 12
-    },
-    "rules": {
-      "semi": [
-        2,
-        "always"
-      ],
-      "camelcase": "off"
-    }
   }
 }
