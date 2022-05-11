@@ -5,7 +5,6 @@ const existsUsuario = require('../helpers/existsUsuario');
 const { Op } = require('sequelize');
 const filterObjectAttributes = require('../helpers/filterObjectAttributes');
 const makeRandomString = require('../helpers/makeRandomString');
-const { body, validationResult } = require('express-validator');
 
 const controller = {};
 
