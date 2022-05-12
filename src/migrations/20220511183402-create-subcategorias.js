@@ -1,26 +1,15 @@
 'use strict';
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('puntajes', {
+    await queryInterface.createTable('subcategorias', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(3)
       },
-      juego: {
-        type: Sequelize.STRING
-      },
-      puntos: {
-        type: Sequelize.INTEGER
-      },
-      usuario_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'usuarios',
-          key: 'id'
-        }
+      nombre: {
+        type: Sequelize.STRING(25)
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +22,6 @@ module.exports = {
     });
   },
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('puntajes');
+    await queryInterface.dropTable('subcategorias');
   }
 };
