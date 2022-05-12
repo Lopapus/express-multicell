@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(3)
       },
       precio: {
         type: Sequelize.FLOAT
@@ -15,16 +15,16 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       observaciones: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(100)
       },
       stock: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(3)
       },
       stock_min: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(3)
       },
       imei: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(20)
       },
       estado: {
         type: Sequelize.BOOLEAN
@@ -33,7 +33,43 @@ module.exports = {
         type: Sequelize.DATE
       },
       codigo_barras: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(3)
+      },
+      id_categoria: {
+        type: Sequelize.INTEGER(3),
+        references: {
+          model: 'categorias',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      id_subcategoria: {
+        type: Sequelize.INTEGER(3),
+        references: {
+          model: 'subcategorias',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      id_marca: {
+        type: Sequelize.INTEGER(3),
+        references: {
+          model: 'marcas',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      id_modelo: {
+        type: Sequelize.INTEGER(3),
+        references: {
+          model: 'modelos',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

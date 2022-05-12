@@ -11,25 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      productos.belongsTo(models.user,
+      productos.belongsTo(models.categorias,
         {
           as: 'categorias',
           foreignKey: 'id_categoria'
         }
       );
-      productos.belongsTo(models.user,
+      productos.belongsTo(models.subcategorias,
         {
           as: 'subcategorias',
           foreignKey: 'id_subcategoria'
         }
       );
-      productos.belongsTo(models.user,
+      productos.belongsTo(models.marcas,
         {
           as: 'marcas',
           foreignKey: 'id_marca'
         }
       );
-      productos.belongsTo(models.user,
+      productos.belongsTo(models.modelos,
         {
           as: 'modelos',
           foreignKey: 'id_modelo'
@@ -43,20 +43,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    observaciones: DataTypes.STRING(100),
-    stock: DataTypes.INTEGER(3),
-    stock_min: DataTypes.INTEGER(3),
-    imei: DataTypes.STRING(20),
+    observaciones: DataTypes.STRING,
+    stock: DataTypes.INTEGER,
+    stock_min: DataTypes.INTEGER,
+    imei: DataTypes.STRING,
     estado: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
     fecha_ingreso: DataTypes.DATE,
-    codigo_barras: DataTypes.STRING(14),
-    id_categoria: DataTypes.INTEGER(3),
-    id_subcategoria: DataTypes.INTEGER(3),
-    id_marca: DataTypes.INTEGER(3),
-    id_modelo: DataTypes.INTEGER(3)
+    codigo_barras: DataTypes.STRING,
+    id_categoria: DataTypes.INTEGER,
+    id_subcategoria: DataTypes.INTEGER,
+    id_marca: DataTypes.INTEGER,
+    id_modelo: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'productos'

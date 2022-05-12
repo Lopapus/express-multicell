@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   marcas.init(
     {
-      nombre: DataTypes.STRING(25)
+      nombre: DataTypes.STRING
     },
     {
       sequelize,

@@ -6,10 +6,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(3)
       },
       nombre: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(25)
       },
       createdAt: {
         allowNull: false,

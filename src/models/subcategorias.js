@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   subcategorias.init({
-    nombre: DataTypes.STRING(25)
+    nombre: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'subcategorias'
