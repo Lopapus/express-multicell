@@ -14,7 +14,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   categorias.init({
-    nombre: DataTypes.STRING
+    nombre: {
+      type: DataTypes.STRING,
+      validate: {
+        // ඞ
+        is: {
+          arg: /^[^$%&|<>#()'¿?¡!¬*/°^`]*$/,
+          msg: 'No se permiten caracteres especiales'
+        },
+        min: {
+          arg: 2,
+          msg: 'Se debe ingresar al menos 2 caracteres'
+        },
+        max: {
+          arg: 25,
+          msg: 'Solo se permite un máximo de 25 caracteres'
+        },
+        notEmpty: {
+          arg: true,
+          msg: 'No se permite crear una marca con el nombre vacío'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'categorias'

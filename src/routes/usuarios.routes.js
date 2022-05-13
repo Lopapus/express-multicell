@@ -9,7 +9,6 @@ const { createUsuario, updateUsuario, updatePassword, deleteUsuario, getUsuario,
 route.get('/', [validateLogin, validateAdmin], findUsuarios);
 route.get('/:id', [validateLogin], getUsuario);
 route.get('/user/:user', [validateLogin], findNomUsuario);
-// route.post('/', createUsuario);
 route.post('/', [validateLogin, validateAdmin], createUsuario);
 route.patch('/:id', [validateLogin], updateUsuario);
 route.put('/password', [validateLogin], updatePassword);
