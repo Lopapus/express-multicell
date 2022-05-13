@@ -35,7 +35,7 @@ controller.postMarca = async (req, res) => {
     });
     return res.status(201).json(marcas.toJSON());
   } catch (error) {
-    res.status(500).json(error.errors || { msg: 'Server Error' });
+    res.status(500).json(error?.errors || { msg: 'Server Error' });
   }
 };
 
