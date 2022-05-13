@@ -21,8 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.set('port', process.env.PORT || 4000);
 
 // Routes
-app.use('/usuarios', require('./routes/usuarios.routes'));
 app.use('/', require('./routes/login.routes'));
+app.use('/usuarios', require('./routes/usuarios.routes'));
+app.use('/marcas', require('./routes/marcas.routes'));
 // app.use('/', require('./src/routes/main.routes'));
 
 // Run server
