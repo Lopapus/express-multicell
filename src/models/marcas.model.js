@@ -19,21 +19,21 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           // ඞ
-          notNull: {
-            arg: true,
-            msg: 'No se permite crear una marca con el nombre vacío'
-          },
           len: {
             args: [2, 25],
             msg: 'El nombre de la marca permite entre 2 y 25 caracteres'
           },
           is: {
-            args: /^(?!\\s)[A-Za-z0-9\s]+$/g,
+            args: /^[a-zA-ZÀ-ÿ\s]*$/,
             msg: 'No se permiten caracteres especiales'
           },
           notEmpty: {
             arg: true,
             msg: 'No se permiten cadena de caracteres vacías'
+          },
+          notNull: {
+            arg: true,
+            msg: 'No se permiten guardar datos nulos'
           }
         }
       }
