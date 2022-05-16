@@ -24,6 +24,10 @@ app.set('port', process.env.PORT || 4000);
 app.use('/', require('./routes/login.routes'));
 app.use('/usuarios', require('./routes/usuarios.routes'));
 app.use('/marcas', require('./routes/marcas.routes'));
+app.use('/modelos', require('./routes/modelos.routes'));
+app.use('/categorias', require('./routes/categorias.routes'));
+app.use('/subcategorias', require('./routes/subcategorias.routes'));
+app.use('/productos', require('./routes/productos.routes'));
 // app.use('/', require('./src/routes/main.routes'));
 
 // Run server
