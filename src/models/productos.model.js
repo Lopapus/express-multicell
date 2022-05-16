@@ -54,6 +54,10 @@ module.exports = (sequelize, DataTypes) => {
         isNull: {
           arg: false,
           msg: 'Debe seleccionar si el producto es factura'
+        },
+        isIn: {
+          args: [['true', 'false']],
+          msg: 'Solo se permiten valores booleanos'
         }
       }
     },
@@ -61,14 +65,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: null,
       validate: {
-        min: {
-          arg: 2,
-          msg: 'En observaciones debe ingresar un mínimo de dos caracteres'
+        len: {
+          args: [0, 100],
+          msg: 'observaciones permite entre 1 y 100 caracteres'
         },
-        max: {
-          arg: 100,
-          msg: 'En observaciones se permite un máximo de 100 caracteres'
-        }
+        allowNull: true
       }
     },
     stock: {
@@ -79,9 +80,9 @@ module.exports = (sequelize, DataTypes) => {
           arg: false,
           msg: 'El stock debe contener números'
         },
-        max: {
-          arg: 3,
-          msg: 'El stock permite un máximo de 3 caracteres'
+        len: {
+          args: [1, 3],
+          msg: 'El stock permite entre 1 y 3 caracteres'
         }
       }
     },
@@ -93,9 +94,9 @@ module.exports = (sequelize, DataTypes) => {
           arg: false,
           msg: 'El stock mínimo debe contener números'
         },
-        max: {
-          arg: 3,
-          msg: 'El stock permite un máximo de 3 caracteres'
+        len: {
+          args: [1, 3],
+          msg: 'El stock mínimo permite entre 1 y 3 caracteres'
         }
       }
     },
@@ -103,24 +104,36 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: null,
       validate: {
-        max: {
-          arg: 20,
-          msg: 'El imai solo permite un máximo de 20 caracteres'
+        len: {
+          args: [0, 20],
+          msg: 'El imei permite un máximo de 20 caracteres'
         }
       }
     },
     estado: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
+      defaultValue: true,
+      validate: {
+        isIn: {
+          args: [['true', 'false']],
+          msg: 'Solo se permiten valores booleanos'
+        }
+      }
     },
     fecha_ingreso: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          arg: true,
+          msg: 'Solo se permite un formato de fecha'
+        }
+      }
     },
     codigo_barras: {
       type: DataTypes.STRING,
       validate: {
-        max: {
-          arg: 14,
+        len: {
+          args: [0, 14],
           msg: 'El codigo de barras solo permite un máximo de 14 caracteres'
         }
       }
@@ -128,36 +141,36 @@ module.exports = (sequelize, DataTypes) => {
     id_categoria: {
       type: DataTypes.INTEGER,
       validate: {
-        max: {
-          arg: 3,
-          msg: 'Solo se permite un máximo de 3 caracteres'
+        isNumeric: {
+          arg: true,
+          msg: 'Solo se permiten números'
         }
       }
     },
     id_subcategoria: {
       type: DataTypes.INTEGER,
       validate: {
-        max: {
-          arg: 3,
-          msg: 'Solo se permite un máximo de 3 caracteres'
+        isNumeric: {
+          arg: true,
+          msg: 'Solo se permiten números'
         }
       }
     },
     id_marca: {
       type: DataTypes.INTEGER,
       validate: {
-        max: {
-          arg: 3,
-          msg: 'Solo se permite un máximo de 3 caracteres'
+        isNumeric: {
+          arg: true,
+          msg: 'Solo se permiten números'
         }
       }
     },
     id_modelo: {
       type: DataTypes.INTEGER,
       validate: {
-        max: {
-          arg: 3,
-          msg: 'Solo se permite un máximo de 3 caracteres'
+        isNumeric: {
+          arg: true,
+          msg: 'Solo se permiten números'
         }
       }
     }

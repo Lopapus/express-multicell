@@ -18,21 +18,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         // ඞ
+        len: {
+          args: [2, 25],
+          msg: 'El nombre de la marca permite entre 2 y 25 caracteres'
+        },
         is: {
-          arg: /^[^$%&|<>#()'¿?¡!¬*/°^`]*$/,
+          args: /^[a-zA-ZÀ-ÿ\s]*$/,
           msg: 'No se permiten caracteres especiales'
-        },
-        min: {
-          arg: 2,
-          msg: 'Se debe ingresar al menos 2 caracteres'
-        },
-        max: {
-          arg: 25,
-          msg: 'Solo se permite un máximo de 25 caracteres'
         },
         notEmpty: {
           arg: true,
-          msg: 'No se permite crear una marca con el nombre vacío'
+          msg: 'No se permiten cadena de caracteres vacías'
+        },
+        allowNull: {
+          arg: false,
+          msg: 'No se permiten guardar datos nulos'
         }
       }
     }
