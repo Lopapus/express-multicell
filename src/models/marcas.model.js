@@ -24,16 +24,12 @@ module.exports = (sequelize, DataTypes) => {
             msg: 'El nombre de la marca permite entre 2 y 25 caracteres'
           },
           is: {
-            args: /^[a-zA-ZÀ-ÿ\s]*$/,
+            args: /^[a-zA-ZÀ-ÿ-0-9\s]*$/,
             msg: 'No se permiten caracteres especiales'
           },
           notEmpty: {
             arg: true,
             msg: 'No se permiten cadena de caracteres vacías'
-          },
-          notNull: {
-            arg: true,
-            msg: 'No se permiten guardar datos nulos'
           }
         }
       }

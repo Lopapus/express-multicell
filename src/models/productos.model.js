@@ -41,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     precio: {
       type: DataTypes.FLOAT,
       validate: {
-        isAlpha: {
-          arg: false,
+        isNumeric: {
+          arg: true,
           msg: 'El precio solo permite números'
         }
       }
@@ -51,10 +51,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       validate: {
-        isNull: {
-          arg: false,
-          msg: 'Debe seleccionar si el producto es factura'
-        },
         isIn: {
           args: [['true', 'false']],
           msg: 'Solo se permiten valores booleanos'
@@ -68,16 +64,15 @@ module.exports = (sequelize, DataTypes) => {
         len: {
           args: [0, 100],
           msg: 'observaciones permite entre 1 y 100 caracteres'
-        },
-        allowNull: true
+        }
       }
     },
     stock: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
-        isAlpha: {
-          arg: false,
+        isNumeric: {
+          arg: true,
           msg: 'El stock debe contener números'
         },
         len: {
@@ -90,13 +85,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
-        isAlpha: {
-          arg: false,
-          msg: 'El stock mínimo debe contener números'
+        isNumeric: {
+          arg: true,
+          msg: 'El stock debe contener números'
         },
         len: {
           args: [1, 3],
-          msg: 'El stock mínimo permite entre 1 y 3 caracteres'
+          msg: 'El stock permite entre 1 y 3 caracteres'
         }
       }
     },

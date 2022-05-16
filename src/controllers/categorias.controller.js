@@ -54,7 +54,7 @@ controller.putCategoria = async (req, res) => {
   }
 };
 
-controller.deleteModelo = async (req, res) => {
+controller.deleteCategoria = async (req, res) => {
   try {
     const categoria = await Categorias.findByPk(req.body.id);
 
