@@ -37,7 +37,7 @@ controller.findUsuarios = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -53,7 +53,7 @@ controller.getUsuario = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -73,7 +73,7 @@ controller.findNomUsuario = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -100,7 +100,7 @@ controller.createUsuario = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -130,7 +130,7 @@ controller.updateUsuario = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -150,7 +150,7 @@ controller.updateClaveMaestra = async (req, res) => {
     return res.status(400).json({ msg: 'El usuario no existe' });
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -177,7 +177,7 @@ controller.updatePassword = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -193,7 +193,7 @@ controller.deleteUsuario = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 

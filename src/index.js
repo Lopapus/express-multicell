@@ -24,6 +24,7 @@ app.set('port', process.env.PORT || 4000);
 app.use('/', require('./routes/login.routes'));
 app.use('/usuarios', require('./routes/usuarios.routes'));
 app.use('/marcas', require('./routes/marcas.routes'));
+app.use('/proveedores', require('./routes/proveedores.routes'));
 // app.use('/', require('./src/routes/main.routes'));
 
 // Run server

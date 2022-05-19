@@ -30,7 +30,7 @@ controller.login = async (req, res) => {
     return res.status(400).json({ msg: 'Usuario no encontrado' });
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json({ msg: alert.msg });
+    res.status(alert.status).json(alert.json);
   }
 };
 
