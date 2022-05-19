@@ -20,14 +20,14 @@ controller.login = async (req, res) => {
         if (validation) {
           const { nombre, usuario: username, rol, id } = user;
           const token = await createJwt(id);
-          return res.status(200).json({ msg: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
+          return res.status(200).json({ message: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
         }
 
-        return res.status(400).json({ msg: 'Contraseña incorrecta' });
+        return res.status(400).json({ message: 'Contraseña incorrecta' });
       }
-      return res.status(400).json({ msg: 'El usuario está inhabilitado' });
+      return res.status(400).json({ message: 'El usuario está inhabilitado' });
     }
-    return res.status(400).json({ msg: 'Usuario no encontrado' });
+    return res.status(400).json({ message: 'Usuario no encontrado' });
   } catch (error) {
     const alert = catchHandler(error);
     res.status(alert.status).json(alert.json);
@@ -36,10 +36,10 @@ controller.login = async (req, res) => {
 
 // controller.logout = async (req, res) => {
 //   try {
-//     res.status(200).json({ msg: 'Usuario deslogueado' });
+//     res.status(200).json({ message: 'Usuario deslogueado' });
 //   } catch (error) {
 //     const alert = catchHandler(error);
-//     res.status(alert.status).json({ msg: alert.msg });
+//     res.status(alert.status).json({ message: alert.message });
 //   }
 // };
 

@@ -1,4 +1,5 @@
 const Proveedor = require('../models').proveedores;
+// const Producto = require('../models').productos;
 const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
@@ -44,7 +45,7 @@ controller.deleteProveedor = async (req, res) => {
       // en caso de que el proveedor no tenga registros cargados (validacion futura)
       await proveedor.destroy();
       return res.status(200).json({
-        msg: 'El proveedor fue eliminado',
+        message: 'El proveedor fue eliminado',
         deleted: {
           nombre: proveedor.nombre,
           cuit: proveedor.cuit

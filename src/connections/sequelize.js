@@ -36,7 +36,7 @@ const verify = () => {
     if (response.ok) {
       return next();
     }
-    return res.status(500).json({ msg: response.message });
+    return res.status(500).json({ message: response.message });
   };
 };
 
