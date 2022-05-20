@@ -1,4 +1,5 @@
 const Modelos = require('../models').modelos;
+const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getModelos = async (req, res) => {
@@ -24,7 +25,8 @@ controller.getModelo = async (req, res) => {
       return res.status(400).json({ message: 'El modelo que está buscando no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -35,7 +37,8 @@ controller.postModelo = async (req, res) => {
     });
     return res.status(201).json(modelos.toJSON());
   } catch (error) {
-    res.status(500).json(error.errors || { message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -50,7 +53,8 @@ controller.putModelo = async (req, res) => {
       return res.status(304).json({ message: 'Ocurrió un error al actualizar el modelo' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -65,7 +69,8 @@ controller.deleteModelo = async (req, res) => {
       return res.status(400).json({ message: 'El modelo que desea eliminar no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
