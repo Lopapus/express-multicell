@@ -10,7 +10,7 @@ middleware.validateLogin = async (req, res, next) => {
     // Verificar existencia del token
     if (!token) {
     // 'No existe el token
-      return res.status(400).json({ msg: 'Error de autenticacion' });
+      return res.status(400).json({ message: 'Error de autenticacion' });
     }
 
     // Verificar token
@@ -24,13 +24,13 @@ middleware.validateLogin = async (req, res, next) => {
           req.userrol = usuario.rol;
           return next();
         }
-        return res.status(401).json({ msg: 'El usuario está inhabilitado' });
+        return res.status(401).json({ message: 'El usuario está inhabilitado' });
       }
     }
-    return res.status(401).json({ msg: 'Debe loguearse para acceder' });
+    return res.status(401).json({ message: 'Debe loguearse para acceder' });
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json({ msg: alert.msg });
+    res.status(alert.status).json({ message: alert.message });
   }
 };
 
@@ -42,10 +42,10 @@ middleware.validateLogin = async (req, res, next) => {
 //       req.userrol = usuario.rol;
 //       return next();
 //     }
-//     return res.status(401).json({ msg: 'Debe loguearse para acceder' });
+//     return res.status(401).json({ message: 'Debe loguearse para acceder' });
 //   } catch (error) {
 //     const alert = catchHandler(error);
-//     res.status(alert.status).json({ msg: alert.msg });
+//     res.status(alert.status).json({ message: alert.message });
 //   }
 // };
 
@@ -53,7 +53,7 @@ middleware.validateAdmin = (req, res, next) => {
   if (req.userrol === 'admin') {
     return next();
   }
-  return res.status(401).json({ msg: 'Debes tener acceso de administrador para realizar esta acción' });
+  return res.status(401).json({ message: 'Debes tener acceso de administrador para realizar esta acción' });
 };
 
 module.exports = middleware;

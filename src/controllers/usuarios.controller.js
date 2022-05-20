@@ -29,7 +29,7 @@ controller.findUsuarios = async (req, res) => {
       if (usuarios) {
         return res.status(200).json(usuarios);
       } else {
-        return res.status(400).json({ msg: 'El usuario no existe' });
+        return res.status(400).json({ message: 'El usuario no existe' });
       }
     } else {
       const usuarios = await Usuarios.findAll({});
@@ -37,7 +37,7 @@ controller.findUsuarios = async (req, res) => {
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -49,11 +49,11 @@ controller.getUsuario = async (req, res) => {
     if (usuario) {
       return res.status(200).json(usuario.toJSON());
     } else {
-      return res.status(400).json({ msg: 'El usuario no existe' });
+      return res.status(400).json({ message: 'El usuario no existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -69,11 +69,11 @@ controller.findNomUsuario = async (req, res) => {
     if (usuario) {
       return res.status(200).json(usuario);
     } else {
-      return res.status(400).json({ msg: 'El usuario no existe' });
+      return res.status(400).json({ message: 'El usuario no existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -96,11 +96,11 @@ controller.createUsuario = async (req, res) => {
 
       return res.status(200).json(usuario.toJSON());
     } else {
-      return res.status(400).json({ msg: 'El usuario ya existe' });
+      return res.status(400).json({ message: 'El usuario ya existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -119,18 +119,18 @@ controller.updateUsuario = async (req, res) => {
       if (update.usuario) {
         const existence = await existsUsuario(req.body.usuario);
         if (existence) {
-          return res.status(400).json({ msg: 'El nombre de usuario ya existe' });
+          return res.status(400).json({ message: 'El nombre de usuario ya existe' });
         }
       }
 
       await usuario.update(update);
       return res.status(200).json(usuario.toJSON());
     } else {
-      return res.status(400).json({ msg: 'El usuario no existe' });
+      return res.status(400).json({ message: 'El usuario no existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -147,10 +147,10 @@ controller.updateClaveMaestra = async (req, res) => {
       });
       return res.status(200).json({ clave_maestra: usuario.clave_maestra });
     }
-    return res.status(400).json({ msg: 'El usuario no existe' });
+    return res.status(400).json({ message: 'El usuario no existe' });
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -170,14 +170,14 @@ controller.updatePassword = async (req, res) => {
         usuario.update({ password: hash_password });
         return res.status(200).json(usuario.toJSON());
       } else {
-        return res.status(400).json({ msg: 'La contraseña o clave_maestra es incorrecta' });
+        return res.status(400).json({ message: 'La contraseña o clave_maestra es incorrecta' });
       }
     } else {
-      return res.status(400).json({ msg: 'El usuario no existe' });
+      return res.status(400).json({ message: 'El usuario no existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 
@@ -187,13 +187,13 @@ controller.deleteUsuario = async (req, res) => {
     const usuario = await Usuarios.findByPk(req.body.id);
     if (usuario) {
       await usuario.destroy();
-      return res.status(200).json({ msg: 'Usuario eliminado' });
+      return res.status(200).json({ message: 'Usuario eliminado' });
     } else {
-      return res.status(400).json({ msg: 'El usuario no existe' });
+      return res.status(400).json({ message: 'El usuario no existe' });
     }
   } catch (error) {
     const alert = catchHandler(error);
-    res.status(alert.status).json(alert.msg);
+    res.status(alert.status).json(alert.json);
   }
 };
 

@@ -1,4 +1,5 @@
 const Productos = require('../models').productos;
+const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getProductos = async (req, res) => {
@@ -7,10 +8,11 @@ controller.getProductos = async (req, res) => {
     if (productos) {
       return res.status(200).json(productos);
     } else {
-      return res.status(400).json({ msg: 'No se encontró ninguna marca en la base de datos' });
+      return res.status(400).json({ message: 'No se encontró ninguna marca en la base de datos' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -21,10 +23,11 @@ controller.getProducto = async (req, res) => {
     if (productos) {
       return res.status(200).json(productos);
     } else {
-      return res.status(400).json({ msg: 'El producto que está buscando no existe' });
+      return res.status(400).json({ message: 'El producto que está buscando no existe' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -47,7 +50,8 @@ controller.postProducto = async (req, res) => {
     });
     return res.status(201).json(productos.toJSON());
   } catch (error) {
-    res.status(500).json(error?.errors || { msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -57,12 +61,13 @@ controller.putProducto = async (req, res) => {
 
     if (productos) {
       await productos.update(req.body);
-      return res.status(200).json({ msg: 'La marca se ha actualizado correctamente' });
+      return res.status(200).json({ message: 'La marca se ha actualizado correctamente' });
     } else {
-      return res.status(304).json({ msg: 'Ocurrió un error al actualizar la marca' });
+      return res.status(304).json({ message: 'Ocurrió un error al actualizar la marca' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -72,12 +77,13 @@ controller.deleteProducto = async (req, res) => {
 
     if (productos) {
       await productos.destroy();
-      return res.status(200).json({ msg: 'Se ha eliminado correctamente' });
+      return res.status(200).json({ message: 'Se ha eliminado correctamente' });
     } else {
-      return res.status(400).json({ msg: 'La marca que desea eliminar no existe' });
+      return res.status(400).json({ message: 'La marca que desea eliminar no existe' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 

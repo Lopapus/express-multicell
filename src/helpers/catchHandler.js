@@ -1,4 +1,9 @@
+const sequelizeCatchHandler = require('./sequelizeCatchHandler');
+
 module.exports = (error) => {
   console.log(error);
-  return { status: 500, msg: 'Server Error' };
+  if (error?.errors) {
+    return { status: 400, json: sequelizeCatchHandler(error.errors) };
+  }
+  return { status: 500, json: { message: 'Server Error' } };
 };

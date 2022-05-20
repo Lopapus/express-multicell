@@ -1,4 +1,5 @@
 const Categorias = require('../models').categorias;
+const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getCategorias = async (req, res) => {
@@ -7,10 +8,11 @@ controller.getCategorias = async (req, res) => {
     if (categorias) {
       return res.status(200).json(categorias);
     } else {
-      return res.status(400).json({ msg: 'No se encontró ninguna categoria en la base de datos' });
+      return res.status(400).json({ message: 'No se encontró ninguna categoria en la base de datos' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -21,10 +23,11 @@ controller.getCategoria = async (req, res) => {
     if (categorias) {
       return res.status(200).json(categorias);
     } else {
-      return res.status(400).json({ msg: 'La categoria que está buscando no existe' });
+      return res.status(400).json({ message: 'La categoria que está buscando no existe' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -35,8 +38,12 @@ controller.postCategoria = async (req, res) => {
     });
     return res.status(201).json(categorias.toJSON());
   } catch (error) {
-    res.status(500).json(error.errors || { msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
+  /* } catch (error) {
+    res.status(500).json(error.errors || { message: 'Server Error' });
+  } */
 };
 
 controller.putCategoria = async (req, res) => {
@@ -45,12 +52,13 @@ controller.putCategoria = async (req, res) => {
 
     if (categoria) {
       await categoria.update(req.body);
-      return res.status(200).json({ msg: 'La categoria se ha actualizado correctamente' });
+      return res.status(200).json({ message: 'La categoria se ha actualizado correctamente' });
     } else {
-      return res.status(304).json({ msg: 'Ocurrió un error al actualizar la categoria' });
+      return res.status(304).json({ message: 'Ocurrió un error al actualizar la categoria' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -60,12 +68,13 @@ controller.deleteCategoria = async (req, res) => {
 
     if (categoria) {
       await categoria.destroy();
-      return res.status(200).json({ msg: 'Se ha eliminado correctamente' });
+      return res.status(200).json({ message: 'Se ha eliminado correctamente' });
     } else {
-      return res.status(400).json({ msg: 'La categoria que desea eliminar no existe' });
+      return res.status(400).json({ message: 'La categoria que desea eliminar no existe' });
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
