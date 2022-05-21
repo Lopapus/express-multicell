@@ -1,4 +1,5 @@
 const Subcategorias = require('../models').subcategorias;
+const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getSubcategorias = async (req, res) => {
@@ -10,7 +11,8 @@ controller.getSubcategorias = async (req, res) => {
       return res.status(400).json({ message: 'No se encontró ninguna subcategoria en la base de datos' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -24,7 +26,8 @@ controller.getSubcategoria = async (req, res) => {
       return res.status(400).json({ message: 'La subcategoria que está buscando no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -35,7 +38,8 @@ controller.postSubcategoria = async (req, res) => {
     });
     return res.status(201).json(subcategorias.toJSON());
   } catch (error) {
-    res.status(500).json(error.errors || { message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -50,7 +54,8 @@ controller.putSubcategoria = async (req, res) => {
       return res.status(304).json({ message: 'Ocurrió un error al actualizar la subcategoria' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -65,7 +70,8 @@ controller.deleteSubcategoria = async (req, res) => {
       return res.status(400).json({ message: 'La subcategoria que desea eliminar no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 

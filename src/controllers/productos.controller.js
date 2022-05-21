@@ -6,6 +6,7 @@ const {
   subcategorias: Subcategorias,
   proveedores: Proveedores
 } = require('../models');
+const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getProductos = async (req, res) => {
@@ -50,8 +51,8 @@ controller.getProductos = async (req, res) => {
       return res.status(400).json({ message: 'No se encontró ninguna marca en la base de datos' });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -65,7 +66,8 @@ controller.getProducto = async (req, res) => {
       return res.status(400).json({ message: 'El producto que está buscando no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -88,7 +90,8 @@ controller.postProducto = async (req, res) => {
     });
     return res.status(201).json(productos.toJSON());
   } catch (error) {
-    res.status(500).json(error?.errors || { message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -103,7 +106,8 @@ controller.putProducto = async (req, res) => {
       return res.status(304).json({ message: 'Ocurrió un error al actualizar la marca' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
@@ -118,7 +122,8 @@ controller.deleteProducto = async (req, res) => {
       return res.status(400).json({ message: 'La marca que desea eliminar no existe' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
   }
 };
 
