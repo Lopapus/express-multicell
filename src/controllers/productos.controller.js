@@ -1,15 +1,56 @@
-const Productos = require('../models').productos;
+const {
+  productos: Productos,
+  marcas: Marcas,
+  modelos: Modelos,
+  categorias: Categorias,
+  subcategorias: Subcategorias,
+  proveedores: Proveedores
+} = require('../models');
 const controller = {};
 
 controller.getProductos = async (req, res) => {
   try {
-    const productos = await Productos.findAll({});
+    const productos = await Productos.findAll({
+      attributes: ['id', 'facturado', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
+      include: [
+        // el as es el nombre del atributo y debe ser el mismo que en el as del assosiation del model
+        {
+          model: Marcas,
+          as: 'marca',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Modelos,
+          as: 'modelo',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Categorias,
+          as: 'categoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Subcategorias,
+          as: 'subcategoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Proveedores,
+          as: 'proveedores',
+          attributes: ['cuit', 'nombre'],
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
     if (productos) {
       return res.status(200).json(productos);
     } else {
       return res.status(400).json({ message: 'No se encontró ninguna marca en la base de datos' });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Server Error' });
   }
 };

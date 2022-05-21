@@ -13,28 +13,35 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       productos.belongsTo(models.categorias,
         {
-          as: 'categorias',
+          as: 'categoria',
           foreignKey: 'id_categoria'
         }
       );
       productos.belongsTo(models.subcategorias,
         {
-          as: 'subcategorias',
+          as: 'subcategoria',
           foreignKey: 'id_subcategoria'
         }
       );
       productos.belongsTo(models.marcas,
         {
-          as: 'marcas',
+          as: 'marca',
           foreignKey: 'id_marca'
         }
       );
       productos.belongsTo(models.modelos,
         {
-          as: 'modelos',
+          as: 'modelo',
           foreignKey: 'id_modelo'
         }
       );
+      productos.belongsToMany(models.proveedores, {
+        as: 'proveedores',
+        foreignKey: 'id_producto',
+        through: {
+          model: models.proveedores_productos
+        }
+      });
     }
   }
   productos.init({
