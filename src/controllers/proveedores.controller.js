@@ -1,34 +1,81 @@
-const { proveedores: Proveedores, productos: Productos } = require('../models');
+const { proveedores: Proveedores } = require('../models');
+const SchemaProveedores = require('../schemas/proveedores.schema');
 const catchHandler = require('../helpers/catchHandler');
+const filterObjectList = require('../helpers/filterObjectList');
+const { Op } = require('sequelize');
 const controller = {};
 
+// query attributes: {
+//   cuit,nombre,search_nombre : string
+//   page,limit : integer
+//   estado,productos : boolean (1:true,0:false)
+// }
+
+// obtiene todos los proveedores
 controller.getProveedores = async (req, res) => {
+  const { cuit, nombre, estado, search_nombre, page, productos } = req.query;
+  let { limit } = req.query;
+
+  // condiciones de busqueda
+  const where = {};
+  if (nombre) { where.nombre = nombre; }
+  if (cuit) { where.cuit = cuit; }
+  if (estado) { where.estado = estado; }
+  if (search_nombre) {
+    where.nombre = {
+      [Op.like]: `%${search_nombre}%`
+    };
+  }
+
+  // paginación
+  // en caso que el limite de registros sea mayor a 0 se agregará a la consulta
+  limit = limit > 0 ? parseInt(limit) : null;
+  // si el numero de pagina es mayor a 0 se agregará a la consulta
+  const offset = parseInt((page > 0 ? page - 1 : 0) * (limit || 1)) || null;
+
+  // verifica si se debe agregar los productos del proveedor
+  const { attributes, include } = SchemaProveedores;
+  const schema = { attributes };
+  // si existe el atributo productos existe en el request.query
+  if (parseInt(productos) === 1) {
+    schema.include = include;
+  }
+
   try {
-    const proveedores = await Proveedores.findAll({
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      },
-      include: [
-        {
-          model: Productos,
-          as: 'productos',
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'id_categoria', 'id_subcategoria', 'id_marca', 'id_modelo']
-          },
-          through: {
-            attributes: []
-          }
-        }
-      ]
-    });
+    const proveedores = await Proveedores.findAll({ ...schema, where, offset, limit });
     if (proveedores) {
       return res.status(200).json(proveedores);
     } else {
       return res.status(400).json({ message: 'No se encontró ningun proveedor en la base de datos' });
     }
   } catch (error) {
-    const err = catchHandler(error);
-    return res.status(err.status).json(err.json);
+    const { status, json } = catchHandler(error);
+    return res.status(status).json(json);
+  }
+};
+
+controller.getProveedor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { productos } = req.query;
+
+    // verifica si se debe agregar los productos del proveedor
+    const { attributes, include } = SchemaProveedores;
+    const schema = { attributes };
+    // si existe el atributo productos existe en el request.query
+    if (parseInt(productos) === 1) {
+      schema.include = include;
+    }
+
+    const proveedor = await Proveedores.findByPk(id, { ...schema });
+    if (proveedor) {
+      return res.status(200).json(proveedor.toPublicJson());
+    } else {
+      return res.status(400).json({ message: 'El proveedor no existe' });
+    }
+  } catch (error) {
+    const { status, json } = catchHandler(error);
+    return res.status(status).json(json);
   }
 };
 
@@ -43,13 +90,14 @@ controller.createProveedor = async (req, res) => {
       correo,
       inscripto
     });
+
     return res.status(201).json({
       message: 'Los datos del proveedor fueron guardados correctamente',
-      created: proveedor.toJSON()
+      created: proveedor.toPublicJson()
     });
   } catch (error) {
-    const err = catchHandler(error);
-    return res.status(err.status).json(err.json);
+    const { status, json } = catchHandler(error);
+    return res.status(status).json(json);
   }
 };
 
@@ -58,15 +106,16 @@ controller.updateProveedor = async (req, res) => {
     const { id, ...update } = req.body;
     const proveedor = await Proveedores.findByPk(id);
     if (proveedor) {
+      const updates = filterObjectList(update, proveedor.attributes);
       await proveedor.update(update);
       return res.status(200).json({
         message: 'Los datos del proveedor se actualizaron correctamente',
-        updates: update
+        updates
       });
     }
   } catch (error) {
-    const err = catchHandler(error);
-    return res.status(err.status).json(err.json);
+    const { status, json } = catchHandler(error);
+    return res.status(status).json(json);
   }
 };
 
@@ -75,25 +124,18 @@ controller.deleteProveedor = async (req, res) => {
     const { id } = req.body;
     const proveedor = await Proveedores.findByPk(id);
     if (proveedor) {
-      const count = await proveedor.countProductos();
-      // en caso de que el proveedor no tenga registros cargados (validacion futura)
-      if (count === 0) {
-        await proveedor.destroy();
+      // const count = await proveedor.countProductos();
+      const deleted = await proveedor.delete();
+      // en caso de que el proveedor no tenga registros cargados
+      if (deleted) {
+        return res.status(200).json({ message: 'El proveedor se eliminó correctamente', type: 'delete' });
       } else {
-        await proveedor.update({ estado: false });
+        return res.status(200).json({ message: 'El proveedor fué desactivado correctamente', type: 'disabled' });
       }
-
-      return res.status(200).json({
-        message: 'El proveedor fue eliminado',
-        deleted: {
-          nombre: proveedor.nombre,
-          cuit: proveedor.cuit
-        }
-      });
     }
   } catch (error) {
-    const err = catchHandler(error);
-    return res.status(err.status).json(err.json);
+    const { status, json } = catchHandler(error);
+    return res.status(status).json(json);
   }
 };
 
