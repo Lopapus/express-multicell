@@ -7,10 +7,13 @@ const {
   getProveedor
 } = require('../controllers/proveedores.controller');
 
-route.get('/', getProveedores);
-route.get('/:id', getProveedor);
-route.post('/', createProveedor);
-route.put('/', updateProveedor);
-route.delete('/', deleteProveedor);
+// middlewares
+const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middlewares');
+
+route.get('/', [validateLogin, validateAdmin], getProveedores);
+route.get('/:id', [validateLogin, validateAdmin], getProveedor);
+route.post('/', [validateLogin, validateAdmin], createProveedor);
+route.put('/', [validateLogin, validateAdmin], updateProveedor);
+route.delete('/', [validateLogin, validateAdmin], deleteProveedor);
 
 module.exports = route;
