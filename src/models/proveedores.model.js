@@ -52,9 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'El nombre es obligatorio'
         },
-        isAlpha: {
-          msg: 'El nombre no puede contener números'
-        },
+        is: /^(?:[A-z\s])*$/gm,
         len: {
           args: [5, 15],
           msg: 'El nombre debe contener entre 5 y 15 caracteres'
