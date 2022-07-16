@@ -23,7 +23,7 @@ controller.login = async (req, res) => {
           return res.status(200).json({ message: 'Bienvenido', user: { nombre, usuario: username, rol, token } });
         }
 
-        return res.status(400).json({ message: 'Contraseña incorrectax' });
+        return res.status(400).json({ message: 'Contraseña incorrecta' });
       }
       return res.status(400).json({ message: 'El usuario está inhabilitado' });
     }
