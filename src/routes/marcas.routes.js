@@ -2,10 +2,13 @@ const route = require('express').Router();
 
 const { getMarcas, getMarca, postMarca, putMarca, deleteMarca } = require('../controllers/marcas.controller');
 
-route.get('/', getMarcas);
-route.get('/:id', getMarca);
-route.post('/', postMarca);
-route.put('/:id', putMarca);
-route.delete('/', deleteMarca);
+// middlewares
+const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middlewares');
+
+route.get('/', [validateLogin, validateAdmin], getMarcas);
+route.get('/:id', [validateLogin, validateAdmin], getMarca);
+route.post('/', [validateLogin, validateAdmin], postMarca);
+route.put('/', [validateLogin, validateAdmin], putMarca);
+route.delete('/', [validateLogin, validateAdmin], deleteMarca);
 
 module.exports = route;

@@ -58,7 +58,43 @@ controller.getProductos = async (req, res) => {
 
 controller.getProducto = async (req, res) => {
   try {
-    const productos = await Productos.findByPk(req.params.id);
+    const productos = await Productos.findAll({
+      where: {
+        id: req.params.id
+      },
+      attributes: ['id', 'facturado', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
+      include: [
+        // el as es el nombre del atributo y debe ser el mismo que en el as del assosiation del model
+        {
+          model: Marcas,
+          as: 'marca',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Modelos,
+          as: 'modelo',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Categorias,
+          as: 'categoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Subcategorias,
+          as: 'subcategoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Proveedores,
+          as: 'proveedores',
+          attributes: ['cuit', 'nombre'],
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
 
     if (productos) {
       return res.status(200).json(productos);
