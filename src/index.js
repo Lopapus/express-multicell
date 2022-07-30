@@ -25,7 +25,6 @@ app.use('/', require('./routes/login.routes'));
 app.use('/usuarios', require('./routes/usuarios.routes'));
 app.use('/marcas', require('./routes/marcas.routes'));
 app.use('/proveedores', require('./routes/proveedores.routes'));
-app.use('/modelos', require('./routes/modelos.routes'));
 app.use('/categorias', require('./routes/categorias.routes'));
 app.use('/subcategorias', require('./routes/subcategorias.routes'));
 app.use('/productos', require('./routes/productos.routes'));

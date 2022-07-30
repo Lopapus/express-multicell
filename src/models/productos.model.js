@@ -29,12 +29,6 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'id_marca'
         }
       );
-      productos.belongsTo(models.modelos,
-        {
-          as: 'modelo',
-          foreignKey: 'id_modelo'
-        }
-      );
       productos.belongsToMany(models.proveedores, {
         as: 'proveedores',
         foreignKey: 'id_producto',
@@ -45,6 +39,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   productos.init({
+    modelo: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      validate: {
+        len: {
+          args: [0, 35],
+          msg: 'Solo se permite hasta 35 caracteres en el modelo'
+        }
+      }
+    },
     precio: {
       type: DataTypes.FLOAT,
       validate: {
