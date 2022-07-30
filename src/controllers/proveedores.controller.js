@@ -42,7 +42,7 @@ controller.getProveedores = async (req, res) => {
   }
 
   try {
-    const proveedores = await Proveedores.findAll({ ...schema, where, offset, limit });
+    const proveedores = await Proveedores.findAll({ ...schema, where, order: ['nombre'], offset, limit });
     if (proveedores) {
       return res.status(200).json(proveedores);
     } else {
