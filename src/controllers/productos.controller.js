@@ -1,7 +1,6 @@
 const {
   productos: Productos,
   marcas: Marcas,
-  modelos: Modelos,
   categorias: Categorias,
   subcategorias: Subcategorias,
   proveedores: Proveedores
@@ -18,11 +17,6 @@ controller.getProductos = async (req, res) => {
         {
           model: Marcas,
           as: 'marca',
-          attributes: ['id', 'nombre']
-        },
-        {
-          model: Modelos,
-          as: 'modelo',
           attributes: ['id', 'nombre']
         },
         {
@@ -71,16 +65,6 @@ controller.getProducto = async (req, res) => {
           attributes: ['id', 'nombre']
         },
         {
-          model: Modelos,
-          as: 'modelo',
-          attributes: ['id', 'nombre']
-        },
-        {
-          model: Categorias,
-          as: 'categoria',
-          attributes: ['id', 'nombre']
-        },
-        {
           model: Subcategorias,
           as: 'subcategoria',
           attributes: ['id', 'nombre']
@@ -110,6 +94,7 @@ controller.getProducto = async (req, res) => {
 controller.postProducto = async (req, res) => {
   try {
     const productos = await Productos.create({
+      modelo: req.body.modelo,
       precio: req.body.precio,
       facturado: req.body.facturado,
       observaciones: req.body.observaciones,
