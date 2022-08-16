@@ -59,12 +59,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     facturado: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      type: DataTypes.INTEGER,
+      defaultValue: false,
       validate: {
-        isIn: {
-          args: [['true', 'false']],
-          msg: 'Solo se permiten valores booleanos'
+        isInt: {
+          msg: 'Solo se permite un valor numérico (0 o 1)'
         }
       }
     },
@@ -127,13 +126,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     fecha_ingreso: {
-      type: DataTypes.DATE,
-      validate: {
-        isDate: {
-          arg: true,
-          msg: 'Solo se permite un formato de fecha'
-        }
-      }
+      type: DataTypes.NOW,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     },
     codigo_barras: {
       type: DataTypes.STRING,
@@ -163,15 +158,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     id_marca: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: {
-          arg: true,
-          msg: 'Solo se permiten números'
-        }
-      }
-    },
-    id_modelo: {
       type: DataTypes.INTEGER,
       validate: {
         isNumeric: {

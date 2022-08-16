@@ -33,6 +33,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       fecha_ingreso: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       codigo_barras: {

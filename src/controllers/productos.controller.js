@@ -101,15 +101,13 @@ controller.postProducto = async (req, res) => {
       stock: req.body.stock,
       stock_min: req.body.stock_min,
       imei: req.body.imei,
-      estado: req.body.estado,
-      fecha_ingreso: req.body.fecha_ingreso,
+      estado: 1,
       codigo_barras: req.body.codigo_barras,
       id_categoria: req.body.id_categoria,
       id_subcategoria: req.body.id_subcategoria,
-      id_marca: req.body.id_marca,
-      id_modelo: req.body.id_modelo
+      id_marca: req.body.id_marca
     });
-    return res.status(201).json(productos.toJSON());
+    return res.status(201).json({ message: `El producto ${productos.modelo} se agregó correctamente` });
   } catch (error) {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);
