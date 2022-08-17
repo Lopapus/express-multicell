@@ -165,15 +165,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Solo se permiten números'
         }
       }
-    },
-    id_modelo: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: {
-          arg: true,
-          msg: 'Solo se permiten números'
-        }
-      }
     }
   }, {
     sequelize,

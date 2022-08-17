@@ -36,7 +36,7 @@ controller.postSubcategoria = async (req, res) => {
     const subcategorias = await Subcategorias.create({
       nombre: req.body.nombre
     });
-    return res.status(201).json(subcategorias.toJSON());
+    return res.status(201).json({ message: `La subcategoría ${subcategorias.nombre} se agregó correctamente` });
   } catch (error) {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);
