@@ -14,9 +14,6 @@ module.exports = {
       precio: {
         type: Sequelize.FLOAT
       },
-      facturado: {
-        type: Sequelize.BOOLEAN
-      },
       observaciones: {
         type: Sequelize.STRING(100)
       },

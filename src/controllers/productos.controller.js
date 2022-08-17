@@ -11,7 +11,7 @@ const controller = {};
 controller.getProductos = async (req, res) => {
   try {
     const productos = await Productos.findAll({
-      attributes: ['id', 'facturado', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
+      attributes: ['id', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
       include: [
         // el as es el nombre del atributo y debe ser el mismo que en el as del assosiation del model
         {
@@ -56,7 +56,7 @@ controller.getProducto = async (req, res) => {
       where: {
         id: req.params.id
       },
-      attributes: ['id', 'facturado', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
+      attributes: ['id', 'precio', 'observaciones', 'stock', 'stock_min', 'imei', 'estado', 'fecha_ingreso', 'codigo_barras'],
       include: [
         // el as es el nombre del atributo y debe ser el mismo que en el as del assosiation del model
         {
@@ -96,7 +96,6 @@ controller.postProducto = async (req, res) => {
     const productos = await Productos.create({
       modelo: req.body.modelo,
       precio: req.body.precio,
-      facturado: req.body.facturado,
       observaciones: req.body.observaciones,
       stock: req.body.stock,
       stock_min: req.body.stock_min,
