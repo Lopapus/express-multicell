@@ -58,15 +58,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    facturado: {
-      type: DataTypes.INTEGER,
-      defaultValue: false,
-      validate: {
-        isInt: {
-          msg: 'Solo se permite un valor numérico (0 o 1)'
-        }
-      }
-    },
     observaciones: {
       type: DataTypes.STRING,
       defaultValue: null,

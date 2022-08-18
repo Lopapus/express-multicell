@@ -1,6 +1,5 @@
 const {
   marcas: Marcas,
-  modelos: Modelos,
   categorias: Categorias,
   subcategorias: Subcategorias,
   proveedores: Proveedores
@@ -9,7 +8,6 @@ const {
 module.exports = {
   attributes: [
     'id',
-    'facturado',
     'precio',
     'observaciones',
     'stock',
@@ -24,11 +22,6 @@ module.exports = {
     {
       model: Marcas,
       as: 'marca',
-      attributes: ['id', 'nombre']
-    },
-    {
-      model: Modelos,
-      as: 'modelo',
       attributes: ['id', 'nombre']
     },
     {
