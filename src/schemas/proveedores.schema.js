@@ -1,4 +1,5 @@
 const { productos: Productos } = require('../models');
+const productos_schema = require('./productos.schema');
 
 module.exports = {
   attributes: {
@@ -8,12 +9,7 @@ module.exports = {
     {
       model: Productos,
       as: 'productos',
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'id_categoria', 'id_subcategoria', 'id_marca', 'id_modelo']
-      },
-      through: {
-        attributes: []
-      }
+      ...productos_schema
     }
   ]
 };

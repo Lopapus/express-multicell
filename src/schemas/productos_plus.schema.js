@@ -1,7 +1,8 @@
 const {
   marcas: Marcas,
   categorias: Categorias,
-  subcategorias: Subcategorias
+  subcategorias: Subcategorias,
+  proveedores: Proveedor
 } = require('../models');
 
 module.exports = {
@@ -33,6 +34,14 @@ module.exports = {
       model: Subcategorias,
       as: 'subcategoria',
       attributes: ['id', 'nombre']
+    },
+    {
+      model: Proveedor,
+      as: 'proveedores',
+      attributes: ['cuit', 'nombre'],
+      through: {
+        attributes: []
+      }
     }
   ]
 };
