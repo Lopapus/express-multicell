@@ -5,6 +5,7 @@ const {
   subcategorias: Subcategorias,
   proveedores: Proveedores
 } = require('../models');
+const { transaction: Transaction } = require('sequelize');
 const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
@@ -143,6 +144,38 @@ controller.deleteProducto = async (req, res) => {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);
   }
+};
+
+controller.updateProductosProveedor = async (req, res) => {
+  return res.status(200).json({ msg: 'la transcacion' });
+  // const transaction = await Transaction();
+  // try {
+  //   const { productos } = req.body;
+  //   const updates = await new Promise((resolve, reject) => {
+  //     console.log('entrado');
+  //     try {
+  //       productos.map(
+  //         async ({ id, entrada }) => {
+  //           console.log('recorriendo');
+  //           const producto = await Productos.findByPk(id);
+
+  //           if (producto) {
+  //             await producto.update({ stock: this.stock + entrada }, { transaction });
+  //             return producto;
+  //           }
+  //         }
+  //       );
+  //       resolve(true);
+  //     } catch (error) {
+  //       reject(error);
+  //     }
+  //   });
+  //   return res.status(400).json({ message: updates });
+  // } catch (error) {
+  //   await transaction.rollback();
+  //   const err = catchHandler(error);
+  //   return res.status(err.status).json(err.json);
+  // }
 };
 
 module.exports = controller;
