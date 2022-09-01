@@ -65,6 +65,11 @@ controller.getProducto = async (req, res) => {
           attributes: ['id', 'nombre']
         },
         {
+          model: Categorias,
+          as: 'categoria',
+          attributes: ['id', 'nombre']
+        },
+        {
           model: Subcategorias,
           as: 'subcategoria',
           attributes: ['id', 'nombre']
