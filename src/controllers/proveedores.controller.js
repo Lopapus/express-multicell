@@ -1,4 +1,5 @@
 const { proveedores: Proveedores, proveedores_productos: ProveedoresProductos } = require('../models');
+const { sequelize } = require('../connections/sequelize');
 const SchemaProveedores = require('../schemas/proveedores.schema');
 const catchHandler = require('../helpers/catchHandler');
 const filterObjectList = require('../helpers/filterObjectList');
@@ -139,40 +140,36 @@ controller.deleteProveedor = async (req, res) => {
   }
 };
 
-controller.addProveedorProducto = async (req, res) => {
-  try {
-    const { proveedor, producto } = req.body;
-    await ProveedoresProductos.create({ id_proveedor: proveedor, id_producto: producto });
-    return res.status(200).json({
-      message: 'Los datos del proveedor fueron guardados correctamente'
-    });
-  } catch (error) {
-    const { status, json } = catchHandler(error);
-    return res.status(status).json(json);
-  }
-};
+controller.updateProveedorProducto = async (req, res) => {
+  const transaction = await sequelize.transaction();
 
-controller.removeProveedorProducto = async (req, res) => {
   try {
-    const { proveedor, producto } = req.body;
-    const prov_product = await ProveedoresProductos.findOne({
-      where: {
-        id_producto: producto,
-        id_proveedor: proveedor
+    const updates = req.body;
+    console.log(updates);
+
+    for (const update of updates) {
+      const { proveedor, id, aggregate } = update;
+
+      if (aggregate) { // si se debe agregar el producto
+        await ProveedoresProductos.create({ id_proveedor: proveedor, id_producto: id }, { transaction });
+      } else { // si se debe eliminar el producto
+        const prov_product = await ProveedoresProductos.findOne({
+          where: {
+            id_producto: id,
+            id_proveedor: proveedor
+          }
+        });
+        if (prov_product) {
+          await prov_product.destroy({ transaction });
+        }
       }
-    });
-    if (prov_product) {
-      console.log(prov_product);
-      await prov_product.destroy();
-      return res.status(200).json({
-        message: 'Se removio el producto al proveedor correctamente'
-      });
     }
 
-    return res.status(400).json({
-      message: 'No se encontro el producto en el proveedor'
-    });
+    await transaction.commit();
+    return res.status(200).json({ message: 'Los productos se actualizaron correctamente' });
   } catch (error) {
+    await transaction.rollback();
+    console.log(error);
     const { status, json } = catchHandler(error);
     return res.status(status).json(json);
   }

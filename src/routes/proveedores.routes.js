@@ -5,8 +5,7 @@ const {
   deleteProveedor,
   getProveedores,
   getProveedor,
-  addProveedorProducto,
-  removeProveedorProducto
+  updateProveedorProducto
 } = require('../controllers/proveedores.controller');
 
 // middlewares
@@ -14,8 +13,7 @@ const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middle
 
 route.get('/', [validateLogin, validateAdmin], getProveedores);
 route.get('/:id', [validateLogin, validateAdmin], getProveedor);
-route.post('/addproducto', [validateLogin, validateAdmin], addProveedorProducto);
-route.post('/removeproducto', [validateLogin, validateAdmin], removeProveedorProducto);
+route.post('/updateproductos', [validateLogin, validateAdmin], updateProveedorProducto);
 route.post('/', [validateLogin, validateAdmin], createProveedor);
 route.put('/', [validateLogin, validateAdmin], updateProveedor);
 route.delete('/', [validateLogin, validateAdmin], deleteProveedor);
