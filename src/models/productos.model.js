@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
           model: models.proveedores_productos
         }
       });
+      // productos.belongsToMany(models.proveedores_productos, {
+      //   as: 'proveedores_productos',
+      //   foreignKey: 'id_producto',
+      //   through: {
+      //     model: models.proveedores_productos
+      //   }
+      // });
     }
   }
   productos.init({

@@ -3,7 +3,8 @@ const {
   marcas: Marcas,
   categorias: Categorias,
   subcategorias: Subcategorias,
-  proveedores: Proveedores
+  proveedores: Proveedores,
+  proveedores_productos: ProveedoresProductos
 } = require('../models');
 const { sequelize } = require('../connections/sequelize');
 const catchHandler = require('../helpers/catchHandler');
@@ -82,6 +83,11 @@ controller.getProducto = async (req, res) => {
           through: {
             attributes: []
           }
+        },
+        {
+          model: ProveedoresProductos,
+          as: 'ProveedoresProductos',
+          attributes: ['id']
         }
       ]
     });
@@ -98,6 +104,8 @@ controller.getProducto = async (req, res) => {
 };
 
 controller.postProducto = async (req, res) => {
+  const transaction = await sequelize.transaction();
+
   try {
     const productos = await Productos.create({
       modelo: req.body.modelo,
@@ -111,9 +119,14 @@ controller.postProducto = async (req, res) => {
       id_categoria: req.body.id_categoria,
       id_subcategoria: req.body.id_subcategoria,
       id_marca: req.body.id_marca
-    });
+    }, { transaction });
+
+    await ProveedoresProductos.create({ id_proveedor: req.body.id_proveedor, id_producto: productos.dataValues.id }, { transaction });
+    await transaction.commit();
+
     return res.status(201).json({ message: `El producto ${productos.modelo} se agregó correctamente` });
   } catch (error) {
+    await transaction.rollback();
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);
   }
