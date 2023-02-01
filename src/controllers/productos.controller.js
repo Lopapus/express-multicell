@@ -110,6 +110,7 @@ controller.postProducto = async (req, res) => {
     const productos = await Productos.create({
       modelo: req.body.modelo,
       precio: req.body.precio,
+      facturado: req.body.facturado,
       observaciones: req.body.observaciones,
       stock: req.body.stock,
       stock_min: req.body.stock_min,

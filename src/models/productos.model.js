@@ -65,6 +65,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    facturado: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: {
+          arg: true,
+          msg: 'Formato no válido en facturado'
+        }
+      }
+    },
     observaciones: {
       type: DataTypes.STRING,
       defaultValue: null,
