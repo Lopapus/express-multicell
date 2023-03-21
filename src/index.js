@@ -7,10 +7,10 @@ const app = express();
 
 // Middlewares
 app.use(morgan('dev'));
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   credentials: true
-// }));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 // ==> middleware que verifica si hay coneccion a la base de datos
 app.use(sequelize_db.verify());
 app.use(cors());

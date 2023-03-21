@@ -191,4 +191,100 @@ controller.updateProductosProveedor = async (req, res) => {
   }
 };
 
+const filterProductosFromDB = async (typeOfFilter, typeId) => {
+  try {
+    const adapterTypeOfFilter = {
+      marcas: 'id_marca',
+      categorias: 'id_categoria',
+      subcategorias: 'id_subcategoria'
+    };
+
+    const productos = await Productos.findAll({
+      where: {
+        [adapterTypeOfFilter[typeOfFilter]]: parseInt(typeId)
+      },
+      attributes: ['id', 'modelo', 'precio', 'stock', 'fecha_ingreso'],
+      include: [
+        {
+          model: Marcas,
+          as: 'marca',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Categorias,
+          as: 'categoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Subcategorias,
+          as: 'subcategoria',
+          attributes: ['id', 'nombre']
+        },
+        {
+          model: Proveedores,
+          as: 'proveedores',
+          attributes: ['cuit', 'nombre'],
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
+
+    return productos;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+controller.filterProductos = async (req, res) => {
+  try {
+    const { typeOfFilter, typeId } = req.body;
+
+    const productos = await filterProductosFromDB(typeOfFilter, typeId);
+
+    res.status(200).json(productos);
+  } catch (error) {
+    console.log(error);
+
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
+  }
+};
+
+controller.changePriceOfProductos = async (req, res) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { mode, typeOfFilter, typeId, mount } = req.body;
+
+    let productos = [];
+    const updates = [];
+
+    if (!typeOfFilter || !typeId) {
+      productos = await Productos.findAll({ transaction });
+    } else {
+      productos = await filterProductosFromDB(typeOfFilter, typeId);
+    }
+
+    for (const producto of productos) {
+      const { precio } = producto;
+      const newPrice = mode === 'porcentaje' ? precio + (precio * mount / 100) : precio + mount;
+      const update = await producto.update({ precio: newPrice }, { transaction });
+      updates.push(update);
+    }
+
+    await transaction.commit();
+
+    return res.status(200).json({ message: 'Los precios se actualizaron correctamente', updates });
+  } catch (error) {
+    await transaction.rollback();
+    console.log(error);
+
+    const err = catchHandler(error);
+    return res.status(err.status).json(err.json);
+  }
+};
+
 module.exports = controller;
