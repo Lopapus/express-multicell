@@ -14,12 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   detalle_ofertas.init({
-    descuento: DataTypes.INTEGER,
-    defaultValue: null,
-    validate: {
-      isNumeric: {
-        arg: true,
-        msg: 'El precio de oferta solo debe contener números'
+    descuento: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      validate: {
+        isNumeric: {
+          arg: true,
+          msg: 'El precio de oferta solo debe contener números'
+        }
       }
     }
   }, {
