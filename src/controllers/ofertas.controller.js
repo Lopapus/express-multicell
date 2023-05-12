@@ -43,7 +43,7 @@ controller.postOferta = async (req, res) => {
   }
 };
 
-controller.putMarca = async (req, res) => {
+controller.putOferta = async (req, res) => {
   try {
     const ofertas = await Ofertas.findByPk(req.body.id);
 
@@ -59,7 +59,7 @@ controller.putMarca = async (req, res) => {
   }
 };
 
-controller.deleteMarca = async (req, res) => {
+controller.deleteOferta = async (req, res) => {
   try {
     const ofertas = await Ofertas.findByPk(req.body.id);
 
