@@ -1,22 +1,16 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('ofertas', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('tipos_ofertas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      precio_oferta: {
-        type: Sequelize.FLOAT
-      },
-      descripcion: {
+      nombre: {
         type: Sequelize.STRING
-      },
-      estado: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -28,7 +22,7 @@ module.exports = {
       }
     });
   },
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('ofertas');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('tipos_ofertas');
   }
 };

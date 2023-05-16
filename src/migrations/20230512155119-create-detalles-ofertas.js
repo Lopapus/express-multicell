@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      id_venta: {
+      id_oferta: {
         type: Sequelize.INTEGER,
         allowNull: false
       },

@@ -1,4 +1,5 @@
 const Ofertas = require('../models').ofertas;
+const Detalles_ofertas = require('../models').detalles_ofertas;
 const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
@@ -33,10 +34,24 @@ controller.getOferta = async (req, res) => {
 
 controller.postOferta = async (req, res) => {
   try {
+    const { oferta } = req.body;
+    const { precio_oferta, descripcion } = oferta;
+    const { productos } = req.body;
+
     const ofertas = await Ofertas.create({
-      nombre: req.body.nombre
+      precio_oferta,
+      descripcion
     });
-    return res.status(201).json({ message: `La oferta ${ofertas.nombre} se agregó correctamente` });
+
+    productos.map(async (element) => {
+      await Detalles_ofertas.create({
+        id_producto: element.id_producto,
+        descuento: element.descuento,
+        id_oferta: ofertas.id
+      });
+    });
+
+    return res.status(201).json({ message: 'La oferta fue creada correctamente' });
   } catch (error) {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);

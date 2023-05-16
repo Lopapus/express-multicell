@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: false
       },
-      fecha: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
       descripcion: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: false
+      },
+      id_tipo_oferta: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
       estado: {
         type: DataTypes.INTEGER,
