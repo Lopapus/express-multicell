@@ -29,6 +29,7 @@ app.use('/categorias', require('./routes/categorias.routes'));
 app.use('/subcategorias', require('./routes/subcategorias.routes'));
 app.use('/productos', require('./routes/productos.routes'));
 app.use('/ofertas', require('./routes/ofertas.routes'));
+app.use('/tipos_ofertas', require('./routes/tipos_ofertas.routes'));
 // app.use('/', require('./src/routes/main.routes'));
 
 // Run server
