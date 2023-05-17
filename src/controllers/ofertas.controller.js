@@ -1,11 +1,23 @@
-const Ofertas = require('../models').ofertas;
-const Detalles_ofertas = require('../models').detalles_ofertas;
+const {
+  ofertas: Ofertas,
+  detalles_ofertas: Detalles_ofertas,
+  tipos_ofertas: Tipos_ofertas
+} = require('../models');
 const catchHandler = require('../helpers/catchHandler');
 const controller = {};
 
 controller.getOfertas = async (req, res) => {
   try {
-    const ofertas = await Ofertas.findAll({});
+    const ofertas = await Ofertas.findAll({
+      attributes: ['id', 'precio_oferta', 'descripcion', 'id_tipo_oferta', 'estado'],
+      include: [
+        // el as es el nombre del atributo y debe ser el mismo que en el as del assosiation del model
+        {
+          model: Tipos_ofertas,
+          as: 'Tipo_oferta',
+          attributes: ['id', 'nombre']
+        }]
+    });
     if (ofertas) {
       return res.status(200).json(ofertas);
     } else {
@@ -35,12 +47,13 @@ controller.getOferta = async (req, res) => {
 controller.postOferta = async (req, res) => {
   try {
     const { oferta } = req.body;
-    const { precio_oferta, descripcion } = oferta;
+    const { precio_oferta, descripcion, id_tipo_oferta } = oferta;
     const { productos } = req.body;
 
     const ofertas = await Ofertas.create({
       precio_oferta,
-      descripcion
+      descripcion,
+      id_tipo_oferta
     });
 
     productos.map(async (element) => {

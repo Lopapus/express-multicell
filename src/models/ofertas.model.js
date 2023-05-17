@@ -9,40 +9,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      // marcas.hasOne(models.productos,
-      //   {
-      //     as: 'productos',
-      //     foreignKey: 'id'
-      //   }
-      // );
+      ofertas.belongsTo(models.tipos_ofertas,
+        {
+          as: 'tipo_oferta',
+          foreignKey: 'id_tipo_oferta'
+        }
+      );
     }
   }
-  ofertas.init(
-    {
-      precio_oferta: {
-        type: DataTypes.FLOAT,
-        defaultValue: 0,
-        allowNull: false,
-        unique: false
-      },
-      descripcion: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: false
-      },
-      id_tipo_oferta: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      estado: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1
-      }
+
+  ofertas.init({
+    precio_oferta: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+      allowNull: false,
+      unique: false
     },
-    {
-      sequelize,
-      modelName: 'ofertas'
+    descripcion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: false
+    },
+    id_tipo_oferta: {
+      type: DataTypes.STRING
+    },
+    estado: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
     }
+  },
+  {
+    sequelize,
+    modelName: 'ofertas'
+  }
   );
   return ofertas;
 };
