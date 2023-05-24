@@ -1,5 +1,7 @@
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ofertas extends Model {
     /**
@@ -12,36 +14,53 @@ module.exports = (sequelize, DataTypes) => {
       ofertas.belongsTo(models.tipos_ofertas,
         {
           as: 'tipo_oferta',
-          foreignKey: 'id_tipo_oferta'
+          foreignKey: 'id'
         }
       );
     }
   }
-
   ofertas.init({
     precio_oferta: {
       type: DataTypes.FLOAT,
-      defaultValue: 0,
-      allowNull: false,
-      unique: false
+      validate: {
+        isNumeric: {
+          arg: true,
+          msg: 'El precio solo permite números'
+        }
+      }
     },
     descripcion: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: false
-    },
-    id_tipo_oferta: {
-      type: DataTypes.STRING
+      defaultValue: null,
+      validate: {
+        len: {
+          args: [0, 100],
+          msg: 'descripción permite entre 1 y 100 caracteres'
+        }
+      }
     },
     estado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      validate: {
+        isIn: {
+          args: [['true', 'false']],
+          msg: 'Solo se permiten valores booleanos'
+        }
+      }
+    },
+    id_tipo_oferta: {
       type: DataTypes.INTEGER,
-      defaultValue: 1
+      validate: {
+        isNumeric: {
+          arg: true,
+          msg: 'Solo se permiten números'
+        }
+      }
     }
-  },
-  {
+  }, {
     sequelize,
     modelName: 'ofertas'
-  }
-  );
+  });
   return ofertas;
 };

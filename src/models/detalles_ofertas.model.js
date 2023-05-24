@@ -20,9 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   detalles_ofertas.init(
     {
-      descuento: {
-        type: DataTypes.FLOAT
-      },
       id_producto: {
         type: DataTypes.INTEGER,
         validate: {

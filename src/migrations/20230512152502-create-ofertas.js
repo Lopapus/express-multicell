@@ -19,7 +19,10 @@ module.exports = {
       },
       id_tipo_oferta: {
         type: Sequelize.INTEGER(3),
-
+        references: {
+          model: 'tipos_ofertas',
+          key: 'id'
+        },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
