@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'No se permiten cadena de caracteres vacías'
         }
       }
+    },
+    estado: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
     }
   }, {
     sequelize,

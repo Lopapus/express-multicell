@@ -1,11 +1,17 @@
 const route = require('express').Router();
 
-const { getProductos, getProducto, postProducto, putProducto, deleteProducto } = require('../controllers/productos.controller');
+const { getProductos, getProducto, postProducto, putProducto, deleteProducto, updateProductosProveedor, filterProductos } = require('../controllers/productos.controller');
 
-route.get('/', getProductos);
-route.get('/:id', getProducto);
-route.post('/', postProducto);
-route.put('/:id', putProducto);
-route.delete('/', deleteProducto);
+// middlewares
+const { validateLogin, validateAdmin } = require('../middlewares/usuarios.middlewares');
+
+// route.put('/proveedor', [validateLogin, validateAdmin], updateProductosProveedor);
+route.put('/proveedor', updateProductosProveedor);
+route.get('/', [validateLogin, validateAdmin], getProductos);
+route.get('/:id', [validateLogin, validateAdmin], getProducto);
+route.post('/', [validateLogin, validateAdmin], postProducto);
+route.put('/:id', [validateLogin, validateAdmin], putProducto);
+route.delete('/', [validateLogin, validateAdmin], deleteProducto);
+route.patch('/', [validateLogin, validateAdmin], filterProductos);
 
 module.exports = route;

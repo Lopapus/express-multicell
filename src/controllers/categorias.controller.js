@@ -36,7 +36,7 @@ controller.postCategoria = async (req, res) => {
     const categorias = await Categorias.create({
       nombre: req.body.nombre
     });
-    return res.status(201).json(categorias.toJSON());
+    return res.status(200).json({ message: `La categoría ${categorias.nombre} se agregó correctamente` });
   } catch (error) {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);
@@ -54,7 +54,7 @@ controller.putCategoria = async (req, res) => {
       await categoria.update(req.body);
       return res.status(200).json({ message: 'La categoria se ha actualizado correctamente' });
     } else {
-      return res.status(304).json({ message: 'Ocurrió un error al actualizar la categoria' });
+      return res.status(400).json({ message: 'La categoria que desea modificar no existe' });
     }
   } catch (error) {
     const err = catchHandler(error);

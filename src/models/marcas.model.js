@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
+      // marcas.hasOne(models.productos,
+      //   {
+      //     as: 'productos',
+      //     foreignKey: 'id'
+      //   }
+      // );
     }
   }
   marcas.init(
@@ -32,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: 'No se permiten cadena de caracteres vacías'
           }
         }
+      },
+      estado: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1
       }
     },
     {

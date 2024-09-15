@@ -36,7 +36,7 @@ controller.postMarca = async (req, res) => {
     const marcas = await Marcas.create({
       nombre: req.body.nombre
     });
-    return res.status(201).json(marcas.toJSON());
+    return res.status(201).json({ message: `La marca ${marcas.nombre} se agregó correctamente` });
   } catch (error) {
     const err = catchHandler(error);
     return res.status(err.status).json(err.json);

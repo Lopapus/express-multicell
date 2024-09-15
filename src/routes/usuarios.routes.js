@@ -10,6 +10,7 @@ route.get('/', [validateLogin, validateAdmin], findUsuarios);
 route.get('/:id', [validateLogin], getUsuario);
 route.get('/user/:user', [validateLogin], findNomUsuario);
 route.post('/', [validateLogin, validateAdmin], createUsuario);
+// route.post('/without', createUsuario);
 route.patch('/:id', [validateLogin], updateUsuario);
 route.put('/password', [validateLogin], updatePassword);
 route.delete('/', [validateLogin, validateAdmin], deleteUsuario);

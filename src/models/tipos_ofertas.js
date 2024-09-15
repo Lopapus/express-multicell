@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class modelos extends Model {
+  class tipos_ofertas extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  modelos.init({
+  tipos_ofertas.init({
     nombre: {
       type: DataTypes.STRING,
       validate: {
@@ -31,10 +31,14 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'No se permiten cadena de caracteres vacías'
         }
       }
+    },
+    estado: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
     }
   }, {
     sequelize,
-    modelName: 'modelos'
+    modelName: 'tipos_ofertas'
   });
-  return modelos;
+  return tipos_ofertas;
 };

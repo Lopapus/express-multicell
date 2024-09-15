@@ -1,19 +1,30 @@
 'use strict';
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('marcas', {
+    await queryInterface.createTable('ofertas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER(3)
       },
-      nombre: {
-        type: Sequelize.STRING(25)
+      precio_oferta: {
+        type: Sequelize.FLOAT
+      },
+      descripcion: {
+        type: Sequelize.STRING
       },
       estado: {
-        type: Sequelize.INTEGER(1),
-        allowNull: false
+        type: Sequelize.INTEGER(1)
+      },
+      id_tipo_oferta: {
+        type: Sequelize.INTEGER(3),
+        references: {
+          model: 'tipos_ofertas',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +37,6 @@ module.exports = {
     });
   },
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('marcas');
+    await queryInterface.dropTable('ofertas');
   }
 };

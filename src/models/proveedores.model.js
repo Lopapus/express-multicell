@@ -11,8 +11,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
+      proveedores.belongsToMany(models.productos, {
+        as: 'productos',
+        foreignKey: 'id_proveedor',
+        through: {
+          model: models.proveedores_productos
+        }
+      });
+    }
+
+    // devuelve un jotajson con los datos para la vista del usuario
+    toPublicJson () {
+      const { id, nombre, cuit, lugar, telefono, correo, inscripto, productos } = this.get();
+      return { id, nombre, cuit, lugar, telefono, correo, inscripto, productos };
+    }
+
+    get attributes () {
+      return this._options.attributes;
+    }
+
+    async delete () {
+      const count = await this.countProductos();
+      if (count > 0) {
+        if (this.estado) {
+          await this.update({ estado: false });
+          return false;
+        }
+      } else {
+        await this.destroy();
+        return true;
+      }
     }
   }
+
   proveedores.init({
     nombre: {
       type: DataTypes.STRING,
@@ -21,9 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'El nombre es obligatorio'
         },
-        isAlpha: {
-          msg: 'El nombre no puede contener números'
-        },
+        is: /^(?:[A-z\s])*$/gm,
         len: {
           args: [5, 15],
           msg: 'El nombre debe contener entre 5 y 15 caracteres'

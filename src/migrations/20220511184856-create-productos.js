@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER(3)
       },
+      modelo: {
+        type: Sequelize.STRING(35)
+      },
       precio: {
         type: Sequelize.FLOAT
-      },
-      facturado: {
-        type: Sequelize.BOOLEAN
       },
       observaciones: {
         type: Sequelize.STRING(100)
@@ -30,6 +30,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       fecha_ingreso: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       codigo_barras: {
@@ -57,15 +58,6 @@ module.exports = {
         type: Sequelize.INTEGER(3),
         references: {
           model: 'marcas',
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      id_modelo: {
-        type: Sequelize.INTEGER(3),
-        references: {
-          model: 'modelos',
           key: 'id'
         },
         onDelete: 'CASCADE',

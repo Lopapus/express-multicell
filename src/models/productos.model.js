@@ -13,31 +13,49 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       productos.belongsTo(models.categorias,
         {
-          as: 'categorias',
+          as: 'categoria',
           foreignKey: 'id_categoria'
         }
       );
       productos.belongsTo(models.subcategorias,
         {
-          as: 'subcategorias',
+          as: 'subcategoria',
           foreignKey: 'id_subcategoria'
         }
       );
       productos.belongsTo(models.marcas,
         {
-          as: 'marcas',
+          as: 'marca',
           foreignKey: 'id_marca'
         }
       );
-      productos.belongsTo(models.modelos,
-        {
-          as: 'modelos',
-          foreignKey: 'id_modelo'
+      productos.belongsToMany(models.proveedores, {
+        as: 'proveedores',
+        foreignKey: 'id_producto',
+        through: {
+          model: models.proveedores_productos
         }
-      );
+      });
+      // productos.belongsToMany(models.proveedores_productos, {
+      //   as: 'proveedores_productos',
+      //   foreignKey: 'id_producto',
+      //   through: {
+      //     model: models.proveedores_productos
+      //   }
+      // });
     }
   }
   productos.init({
+    modelo: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      validate: {
+        len: {
+          args: [0, 35],
+          msg: 'Solo se permite hasta 35 caracteres en el modelo'
+        }
+      }
+    },
     precio: {
       type: DataTypes.FLOAT,
       validate: {
@@ -48,12 +66,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     facturado: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      type: DataTypes.INTEGER,
       validate: {
-        isIn: {
-          args: [['true', 'false']],
-          msg: 'Solo se permiten valores booleanos'
+        isNumeric: {
+          arg: true,
+          msg: 'Formato no válido en facturado'
         }
       }
     },
@@ -116,13 +133,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     fecha_ingreso: {
-      type: DataTypes.DATE,
-      validate: {
-        isDate: {
-          arg: true,
-          msg: 'Solo se permite un formato de fecha'
-        }
-      }
+      type: DataTypes.NOW,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     },
     codigo_barras: {
       type: DataTypes.STRING,
@@ -152,15 +165,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     id_marca: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: {
-          arg: true,
-          msg: 'Solo se permiten números'
-        }
-      }
-    },
-    id_modelo: {
       type: DataTypes.INTEGER,
       validate: {
         isNumeric: {
